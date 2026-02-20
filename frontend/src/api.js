@@ -1,4 +1,4 @@
-const BASE_URL = '';  // Uses Vite proxy in dev, same-origin in prod
+const BASE_URL = import.meta.env.VITE_API_BASE || 'http://localhost:3001';
 
 export async function saveRun(runData) {
   const res = await fetch(`${BASE_URL}/run`, {
