@@ -4,7 +4,10 @@ const fs = require('fs');
 const path = require('path');
 
 const app = express();
-const PORT = 3001;
+
+// ✅ FIX: Use dynamic port for Render
+const PORT = process.env.PORT || 3001;
+
 const DATA_FILE = path.join(__dirname, 'runs.json');
 
 app.use(cors());
@@ -28,6 +31,11 @@ function readRuns() {
 function writeRuns(runs) {
   fs.writeFileSync(DATA_FILE, JSON.stringify(runs, null, 2));
 }
+
+// Optional root route (prevents "Cannot GET /")
+app.get('/', (req, res) => {
+  res.json({ message: 'TerritoryRun API is live 🚀' });
+});
 
 // GET /runs - fetch all previous runs
 app.get('/runs', (req, res) => {
@@ -54,7 +62,7 @@ app.post('/run', (req, res) => {
   }
 
   const newRun = {
-    id: `run_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+    id: `run_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`,
     path: runPath,
     distance: typeof distance === 'number' ? distance : 0,
     claimedTiles: Array.isArray(claimedTiles) ? claimedTiles : [],
@@ -68,7 +76,7 @@ app.post('/run', (req, res) => {
   runs.push(newRun);
   writeRuns(runs);
 
-  console.log(`✅ Saved run ${newRun.id}: ${runPath.length} points, ${(newRun.distance / 1000).toFixed(2)}km, ${newRun.claimedTiles.length} tiles`);
+  console.log(`✅ Saved run ${newRun.id}`);
   res.status(201).json(newRun);
 });
 
@@ -101,6 +109,6 @@ app.get('/stats', (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`🚀 TerritoryRun backend running at http://localhost:${PORT}`);
+  console.log(`🚀 TerritoryRun backend running on port ${PORT}`);
   console.log(`📁 Data file: ${DATA_FILE}`);
 });
