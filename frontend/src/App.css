@@ -1,0 +1,71 @@
+.app {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  background: var(--bg-primary);
+}
+
+.map-container {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+}
+
+.map-container > .leaflet-container {
+  position: absolute;
+  inset: 0;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* History viewing chip overlay */
+.history-chip {
+  position: absolute;
+  top: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 500;
+  background: var(--bg-panel);
+  border: 1px solid rgba(100, 160, 255, 0.6);
+  border-radius: 20px;
+  padding: 6px 12px 6px 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  color: rgba(100, 160, 255, 1);
+  letter-spacing: 1px;
+  cursor: pointer;
+  box-shadow: 0 2px 15px rgba(0,0,0,0.5);
+  white-space: nowrap;
+}
+
+.history-chip:hover {
+  background: var(--bg-card);
+}
+
+.chip-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(100, 160, 255, 1);
+  flex-shrink: 0;
+}
+
+.chip-close {
+  background: none;
+  border: none;
+  color: rgba(100, 160, 255, 0.7);
+  cursor: pointer;
+  font-size: 10px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  margin-left: 4px;
+}
+
+.chip-close:hover {
+  color: var(--danger);
+}
